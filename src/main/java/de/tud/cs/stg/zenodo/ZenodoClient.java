@@ -24,8 +24,8 @@ import java.util.TimeZone;
  */
 public class ZenodoClient {
 
-    private static final String productionToken = "GopFIrt1d7D219AR3ORCHIL33oe7vAmeht2pPr1ZxzOenLp5m4ynCQLLOUBD";
-    private static final String sandboxToken = "WjNJFRWxsnDdnQoJdAZ92YZ6k69PXfBTqKmjuZphAtgG0Fs66orrre5sMWJe";
+    private static final String productionToken = "tokengoeshere";
+    private static final String sandboxToken = "tokengoeshere";
 
     private static final String sandboxURL = "https://sandbox.zenodo.org/";
     private static final String productionURL = "https://zenodo.org/";
