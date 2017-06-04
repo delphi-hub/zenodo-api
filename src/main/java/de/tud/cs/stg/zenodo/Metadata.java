@@ -9,6 +9,23 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Metadata {
+
+    Metadata() {
+
+    }
+
+    public Metadata(UploadType upload_type,
+                    Date publication_date,
+                    String title,
+                    String description,
+                    AccessRight accessRight) {
+        this.upload_type  = upload_type.toString();
+        this.publication_date = publication_date;
+        this.title = title;
+        this.description = description;
+        this.access_right = accessRight.toString();
+    }
+
     public PreserveDOI preserve_doi;
     public String upload_type;
     public String publication_type;
@@ -51,4 +68,58 @@ public class Metadata {
     // public ArrayList<Subject> subjects;
 
 
+    /**
+     * Created by benhermann on 04.06.17.
+     */
+    public static class AccessRight {
+        private String accessRight;
+
+        private AccessRight(String accessRight) {
+            this.accessRight = accessRight;
+        }
+
+        @Override
+        public String toString() {
+            return accessRight;
+        }
+
+        public static final AccessRight OPEN = new AccessRight("open");
+        public static final AccessRight EMBARGOED = new AccessRight("embargoed");
+        public static final AccessRight RESTRICTED = new AccessRight("restricted");
+        public static final AccessRight CLOSED = new AccessRight("closed");
+    }
+
+    /**
+     * Created by benhermann on 04.06.17.
+     */
+    public static class UploadType {
+        private String uploadType;
+
+        private UploadType(String uploadType) {
+            this.uploadType = uploadType;
+        }
+
+        @Override
+        public String toString() {
+            return uploadType;
+        }
+
+        public static final UploadType PUBLICATION = new UploadType("publication");
+        public static final UploadType POSTER = new UploadType("poster");
+        public static final UploadType PRESENTATION = new UploadType("presentation");
+        public static final UploadType DATASET = new UploadType("dataset");
+        public static final UploadType IMAGE = new UploadType("image");
+        public static final UploadType VIDEO = new UploadType("video");
+        public static final UploadType SOFTWARE = new UploadType("software");
+
+
+    }
+
+    /**
+     * Created by benhermann on 01.06.17.
+     */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class PreserveDOI {
+
+    }
 }

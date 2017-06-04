@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by benhermann on 31.05.17.
@@ -48,7 +47,7 @@ public class ZenodoClient {
             final ISO8601DateFormat dateFormat = new ISO8601DateFormat() {
                 @Override
                 public Date parse(String source) throws ParseException {
-                    if (!source.endsWith("+0000")) source = source + "+0000";
+                    if (!source.endsWith("+0000") && ! source.endsWith("+00:00")) source = source + "+0000";
                     return super.parse(source);
                 }
             };
@@ -98,6 +97,18 @@ public class ZenodoClient {
         return false;
     }
 
+    public Deposition getDeposition(Integer id) {
+        GetRequest request = prepareGetRequest(baseURL + API.Deposit.Entity);
+        request.routeParam("id", id.toString());
+        try {
+            HttpResponse<Deposition> response = request.asObject(Deposition.class);
+            return response.getBody();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Deposition> getDepositions() {
         ArrayList<Deposition> result = new ArrayList<Deposition>();
         GetRequest request = prepareGetRequest(baseURL + API.Deposit.Depositions);
@@ -108,6 +119,28 @@ public class ZenodoClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Deposition updateDeposition(Deposition deposition) {
+        HttpRequestWithBody request = preparePutRequest(baseURL + API.Deposit.Entity);
+        request.routeParam("id", deposition.id.toString());
+        try {
+            HttpResponse<Deposition> response = request.asObject(Deposition.class);
+            return response.getBody();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void deleteDeposition(Integer id) {
+        HttpRequestWithBody request = prepareDeleteRequest(baseURL + API.Deposit.Entity);
+        request.routeParam("id", id.toString());
+        try {
+            HttpResponse<String> response = request.asString();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 
     private <T> T fromJSON(final TypeReference<T> type, final String jsonPacket) {
@@ -181,20 +214,35 @@ public class ZenodoClient {
                 .header("Authorization", "Bearer " + token);
     }
 
+    private HttpRequestWithBody preparePutRequest(String url) {
+        return Unirest.put(url)
+                      .header("Content-Type", "application/json")
+                        .header("Authorization", "Bearer" + token);
+    }
+
+    private HttpRequestWithBody prepareDeleteRequest(String url) {
+        return Unirest.delete(url)
+                        .header("Content-Type", "application/json")
+                        .header("Authorization", "Bearer " + token);
+    }
+
     public static void main(String[] args) {
         ZenodoClient client = new ZenodoClient(sandboxURL, sandboxToken);
         System.out.println(client.test());
 
-        Metadata firstTry = new Metadata();
-        firstTry.title = "API test";
-        Deposition deposition = client.createDeposition(firstTry);
-        System.out.println(deposition.id);
+       Metadata firstTry = new Metadata(Metadata.UploadType.DATASET,
+                                        new Date(),
+                                        "API test",
+                                        "API test",
+                                        Metadata.AccessRight.CLOSED);
 
-        /*
-        // Produces status 500 currently.
+       // Deposition deposition = client.createDeposition(firstTry);
+        //System.out.println(deposition.id);
+
         List<Deposition> depositions = client.getDepositions();
         for (Deposition d : depositions)
-            client.discard(d.id);
-        */
+            //System.out.println(d.title);
+            client.deleteDeposition(d.id);
+
     }
 }
