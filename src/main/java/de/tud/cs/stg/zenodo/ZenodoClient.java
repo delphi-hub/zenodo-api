@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by benhermann on 31.05.17.
  */
-public class ZenodoClient {
+public class ZenodoClient implements ZenodoAPI {
 
 	private static final String productionToken = "E7MJ0NJUzEwLKk9FH5f3xcaj2DgSgxZpR83kEn2EneMuR42YkeD7dM3Znn6b";
 	private static final String sandboxToken = "HWiH1QCdIj81fj0a9vB9knBzfH8puk55NXiEZqkumpILavP2BHgKnjgUEyc9";
@@ -185,25 +185,6 @@ public class ZenodoClient {
 		return null;
 	}
 	
-	public Deposition createDepositionwithVersion(final Metadata m,  Integer depositionId) {
-		HttpRequestWithBody post = preparePostRequest(baseURL + API.Deposit.NewVersion);
-		post.routeParam("id", depositionId.toString());
-		String data = "{}";
-		if (m != null)
-			data = objectMapper.writeValue(new Object() {
-				public Metadata metadata = m;
-			});
-		   RequestBodyEntity completePost = post.body(data);
-		   try {
-				HttpResponse<Deposition> response = completePost.asObject(Deposition.class);
-				return response.getBody();
-
-			} catch (UnirestException e) {
-				e.printStackTrace();
-			}
-			return null;
-	}
-
 	/**
 	 * Created by agupta on 19.11.18. to get the list of files for a particular
 	 * deposition
@@ -293,40 +274,40 @@ public class ZenodoClient {
 				"Bearer " + token);
 	}
 
-	public static void main(String[] args) throws UnsupportedOperationException, IOException, UnirestException {
-		ZenodoClient client = new ZenodoClient(sandboxURL, sandboxToken);
-		System.out.println(client.test());
-
-//		 Metadata firstTry = new Metadata(Metadata.UploadType.DATASET,
-//		 new Date(),
-//		 "API test",
-//		 "API test",
-//		 "1.0",
-//		 Metadata.AccessRight.CLOSED);
+//	public static void main(String[] args) throws UnsupportedOperationException, IOException, UnirestException {
+//		ZenodoClient client = new ZenodoClient(sandboxURL, sandboxToken);
+//		System.out.println(client.test());
+//
+////		 Metadata firstTry = new Metadata(Metadata.UploadType.DATASET,
+////		 new Date(),
+////		 "API test",
+////		 "API test",
+////		 "1.0",
+////		 Metadata.AccessRight.CLOSED);
+////		
+////		 Deposition deposition = client.createDeposition(firstTry);
+//   
+//		HttpResponse<JsonNode> jsonResponse = Unirest.post("https://sandbox.zenodo.org/"+API.Deposit.Files).routeParam("id", Integer.toString(252680))
+//         		   .header("Authorization", "Bearer "+ sandboxToken)
+//				  .header("accept", "application/json")
+//				  .field("filename", "archive.zip")
+//				  .field("file", new File("/home/ankur/SHK/zenodo/archive.zip"))
+//				  .asJson();
+//		System.out.println(jsonResponse.getStatus());
+////		FileMetadata firstFile = new FileMetadata(new File("/home/ankur/SHK/zenodo/archive.zip"));
+////		DepositionFile newFile = client.uploadFile(firstFile,252119);
+////		System.out.println("File Uploaded " + newFile.id + " " + newFile.filename);
+//		List<Deposition> depositions = client.getDepositions();
+//		for (Deposition d : depositions)
+//			System.out.println(d.title + " " + d.created + " " + d.id);
+//
+//		List<DepositionFile> files = client.getFiles(252123);
+//		for (DepositionFile f : files) {
+//			System.out.println(f.filename + " " + f.id + " " + f.filesize + " " + f.links.download);
+//		}
 //		
-//		 Deposition deposition = client.createDeposition(firstTry);
-   
-		HttpResponse<JsonNode> jsonResponse = Unirest.post("https://sandbox.zenodo.org/"+API.Deposit.Files).routeParam("id", Integer.toString(252680))
-         		   .header("Authorization", "Bearer "+ sandboxToken)
-				  .header("accept", "application/json")
-				  .field("filename", "archive.zip")
-				  .field("file", new File("/home/ankur/SHK/zenodo/archive.zip"))
-				  .asJson();
-		System.out.println(jsonResponse.getStatus());
-//		FileMetadata firstFile = new FileMetadata(new File("/home/ankur/SHK/zenodo/archive.zip"));
-//		DepositionFile newFile = client.uploadFile(firstFile,252119);
-//		System.out.println("File Uploaded " + newFile.id + " " + newFile.filename);
-		List<Deposition> depositions = client.getDepositions();
-		for (Deposition d : depositions)
-			System.out.println(d.title + " " + d.created + " " + d.id);
-
-		List<DepositionFile> files = client.getFiles(252123);
-		for (DepositionFile f : files) {
-			System.out.println(f.filename + " " + f.id + " " + f.filesize + " " + f.links.download);
-		}
-		
-		
-	
-
-	}
+//		
+//	
+//
+//	}
 }
