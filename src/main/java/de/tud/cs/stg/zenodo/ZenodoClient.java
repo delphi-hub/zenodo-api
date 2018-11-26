@@ -184,6 +184,25 @@ public class ZenodoClient {
 		}
 		return null;
 	}
+	
+	public Deposition createDepositionwithVersion(final Metadata m,  Integer depositionId) {
+		HttpRequestWithBody post = preparePostRequest(baseURL + API.Deposit.NewVersion);
+		post.routeParam("id", depositionId.toString());
+		String data = "{}";
+		if (m != null)
+			data = objectMapper.writeValue(new Object() {
+				public Metadata metadata = m;
+			});
+		   RequestBodyEntity completePost = post.body(data);
+		   try {
+				HttpResponse<Deposition> response = completePost.asObject(Deposition.class);
+				return response.getBody();
+
+			} catch (UnirestException e) {
+				e.printStackTrace();
+			}
+			return null;
+	}
 
 	/**
 	 * Created by agupta on 19.11.18. to get the list of files for a particular
@@ -282,20 +301,21 @@ public class ZenodoClient {
 //		 new Date(),
 //		 "API test",
 //		 "API test",
+//		 "1.0",
 //		 Metadata.AccessRight.CLOSED);
 //		
 //		 Deposition deposition = client.createDeposition(firstTry);
-//		 System.out.println(deposition.id);
-		HttpResponse<JsonNode> jsonResponse = Unirest.post("https://sandbox.zenodo.org/"+API.Deposit.Files).routeParam("id", Integer.toString(252134))
+   
+		HttpResponse<JsonNode> jsonResponse = Unirest.post("https://sandbox.zenodo.org/"+API.Deposit.Files).routeParam("id", Integer.toString(252680))
          		   .header("Authorization", "Bearer "+ sandboxToken)
 				  .header("accept", "application/json")
 				  .field("filename", "archive.zip")
 				  .field("file", new File("/home/ankur/SHK/zenodo/archive.zip"))
 				  .asJson();
 		System.out.println(jsonResponse.getStatus());
-		FileMetadata firstFile = new FileMetadata(new File("/home/ankur/SHK/zenodo/archive.zip"));
-		DepositionFile newFile = client.uploadFile(firstFile,252119);
-		System.out.println("File Uploaded " + newFile.id + " " + newFile.filename);
+//		FileMetadata firstFile = new FileMetadata(new File("/home/ankur/SHK/zenodo/archive.zip"));
+//		DepositionFile newFile = client.uploadFile(firstFile,252119);
+//		System.out.println("File Uploaded " + newFile.id + " " + newFile.filename);
 		List<Deposition> depositions = client.getDepositions();
 		for (Deposition d : depositions)
 			System.out.println(d.title + " " + d.created + " " + d.id);
@@ -304,7 +324,9 @@ public class ZenodoClient {
 		for (DepositionFile f : files) {
 			System.out.println(f.filename + " " + f.id + " " + f.filesize + " " + f.links.download);
 		}
-		// client.deleteDeposition(d.id);
+		
+		
+	
 
 	}
 }
