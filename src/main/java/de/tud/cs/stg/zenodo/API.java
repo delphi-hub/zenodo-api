@@ -16,7 +16,7 @@ public final class API {
         public final static String Publish = "api/deposit/depositions/{id}/actions/publish";
         public final static String Discard = "api/deposit/depositions/{id}/actions/discard";
         public final static String Edit = "api/deposit/depositions/{id}/actions/edit";
-
+        public final static String NewVersion = "/api/deposit/depositions/{id}/actions/newversion";
         public final static String Entity = "api/deposit/depositions/{id}";
 
     }

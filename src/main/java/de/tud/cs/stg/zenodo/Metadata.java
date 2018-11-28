@@ -18,11 +18,13 @@ public class Metadata {
                     Date publication_date,
                     String title,
                     String description,
+                    String version,
                     AccessRight accessRight) {
         this.upload_type  = upload_type.toString();
         this.publication_date = publication_date;
         this.title = title;
         this.description = description;
+        this.version = version;
         this.access_right = accessRight.toString();
     }
 
@@ -63,6 +65,7 @@ public class Metadata {
     public String imprint_place;
     public String partof_title;
     public String partof_pages;
+    public String version;
     public String thesis_supervisors;
     public String thesis_university;
     // public ArrayList<Subject> subjects;
