@@ -8,6 +8,38 @@
     <artifactId>zenodo-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A Java client for the zenodo.org archive service.</description>
+    <url>https://github.com/delphi-hub/zenodo-api/blob/master/README.md</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Ben Hermann</name>
+            <email>ben.hermann@upb.de</email>
+            <organization>Paderborn University</organization>
+            <organizationUrl>http://thewhitespace.de/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Ankur Gupta</name>
+            <email>agupta@mail.uni-paderborn.de</email>
+            <organization>Paderborn University</organization>
+            <organizationUrl>https://www.hni.uni-paderborn.de/swt/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/delphi-hub/zenodo-api.git</connection>
+        <developerConnection>scm:git:ssh://github.com:delphi-hub/zenodo-api.git</developerConnection>
+        <url>http://github.com/delphi-hub/zenodo-api/tree/master</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>com.mashape.unirest</groupId>
