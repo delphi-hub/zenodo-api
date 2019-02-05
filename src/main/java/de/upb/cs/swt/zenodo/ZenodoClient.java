@@ -1,21 +1,18 @@
-package de.tud.cs.stg.zenodo;
+package de.upb.cs.swt.zenodo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
-import com.mashape.unirest.request.body.MultipartBody;
 import com.mashape.unirest.request.body.RequestBodyEntity;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,8 +24,8 @@ import java.util.List;
  */
 public class ZenodoClient implements ZenodoAPI {
 
-	private static final String productionToken = "E7MJ0NJUzEwLKk9FH5f3xcaj2DgSgxZpR83kEn2EneMuR42YkeD7dM3Znn6b";
-	private static final String sandboxToken = "HWiH1QCdIj81fj0a9vB9knBzfH8puk55NXiEZqkumpILavP2BHgKnjgUEyc9";
+	private static final String productionToken = "tokengoeshere";
+	private static final String sandboxToken = "tokengoeshere";
 
 	private static final String sandboxURL = "https://sandbox.zenodo.org/";
 	private static final String productionURL = "https://zenodo.org/";
@@ -171,7 +168,7 @@ public class ZenodoClient implements ZenodoAPI {
 			data = objectMapper.writeValue(new Object() {
 				public Metadata metadata = m;
 			});
-		
+
 		RequestBodyEntity completePost = post.body(data);
         completePost.getEntity().writeTo(bytes);
         System.out.println(bytes.toString());
@@ -184,7 +181,7 @@ public class ZenodoClient implements ZenodoAPI {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Created by agupta on 19.11.18. to get the list of files for a particular
 	 * deposition
@@ -219,7 +216,7 @@ public class ZenodoClient implements ZenodoAPI {
 			System.out.println(response.getStatus() + " " + response.getStatusText() + response.getBody().toString());
 			return response.getBody();
 
-		} catch (UnirestException e) { 
+		} catch (UnirestException e) {
 			e.printStackTrace();
 
 		}
@@ -284,9 +281,9 @@ public class ZenodoClient implements ZenodoAPI {
 ////		 "API test",
 ////		 "1.0",
 ////		 Metadata.AccessRight.CLOSED);
-////		
+////
 ////		 Deposition deposition = client.createDeposition(firstTry);
-//   
+//
 //		HttpResponse<JsonNode> jsonResponse = Unirest.post("https://sandbox.zenodo.org/"+API.Deposit.Files).routeParam("id", Integer.toString(252680))
 //         		   .header("Authorization", "Bearer "+ sandboxToken)
 //				  .header("accept", "application/json")
@@ -305,9 +302,9 @@ public class ZenodoClient implements ZenodoAPI {
 //		for (DepositionFile f : files) {
 //			System.out.println(f.filename + " " + f.id + " " + f.filesize + " " + f.links.download);
 //		}
-//		
-//		
-//	
+//
+//
+//
 //
 //	}
 }

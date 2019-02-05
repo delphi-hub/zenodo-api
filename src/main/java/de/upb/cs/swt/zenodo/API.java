@@ -1,4 +1,4 @@
-package de.tud.cs.stg.zenodo;
+package de.upb.cs.swt.zenodo;
 
 /**
  * Created by benhermann on 31.05.17.

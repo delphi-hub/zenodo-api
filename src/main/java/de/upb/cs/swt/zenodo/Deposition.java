@@ -1,4 +1,4 @@
-package de.tud.cs.stg.zenodo;
+package de.upb.cs.swt.zenodo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
