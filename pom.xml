@@ -55,30 +55,7 @@
     </dependency>
   </dependencies>
 
-  <settings>
-    <servers>
-      <server>
-        <id>ossrh</id>
-        <username>${env.SONATYPE_USERNAME}</username>
-        <password>${env.SONATYPE_PASSWORD}</password>
-      </server>
-    </servers>
 
-    <profiles>
-      <profile>
-        <id>ossrh</id>
-        <activation>
-          <activeByDefault>true</activeByDefault>
-        </activation>
-        <properties>
-          <gpg.executable>gpg</gpg.executable>
-          <gpg.keyname>${env.KEYID}</gpg.keyname>
-          <gpg.passphrase>${env.PASSPHRASE}</gpg.passphrase>
-        </properties>
-
-      </profile>
-    </profiles>
-  </settings>
 
   <distributionManagement>
     <snapshotRepository>
