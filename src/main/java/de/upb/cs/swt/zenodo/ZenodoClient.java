@@ -3,7 +3,7 @@ package de.upb.cs.swt.zenodo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
@@ -44,7 +44,7 @@ public class ZenodoClient implements ZenodoAPI {
 		this.token = token;
 
 		objectMapper = new MyObjectMapper() {
-			final ISO8601DateFormat dateFormat = new ISO8601DateFormat() {
+			final StdDateFormat dateFormat = new StdDateFormat() {
 				@Override
 				public Date parse(String source) throws ParseException {
 					if (!source.endsWith("+0000") && !source.endsWith("+00:00"))
