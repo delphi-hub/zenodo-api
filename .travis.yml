@@ -14,7 +14,7 @@ after_success:
 - mvn clean deploy --settings deployment/settings.xml -Dgpg.executable=gpg2 -Dgpg.keyname=$KEYID
   -Dgpg.passphrase=$PASSPHRASE -Dgpg.publicKeyring=$TRAVIS_BUILD_DIR/pubring.gpg -Dgpg.secretKeyring=$TRAVIS_BUILD_DIR/secring.gpg
 before_install:
--  openssl aes-256-cbc -K $encrypted_e5c65c774293_key -iv 0-in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
+-  openssl aes-256-cbc -K $encrypted_e5c65c774293_key -iv 0 -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
 cache:
   directories:
     - ~/.m2/repository
